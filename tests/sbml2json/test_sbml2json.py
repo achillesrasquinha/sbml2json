@@ -10,14 +10,13 @@ PATH["SBML"] = osp.join(PATH["DATA"], "sbml")
 
 def test_sbml2json():
     path_ecoli  = osp.join(PATH["SBML"], "e_coli_core.xml.gz")
-    
     model       = sbml2json(path_ecoli)
     
-    assert model == {
-        "id": "e_coli_core",
-        "name": "",
-        "compartments": {
-            "e": "extracellular space",
-            "c": "cytosol"   
-        }
-    }
+    assert model["id"]              == "e_coli_core"
+    assert model["name"]            == ""
+    assert model["compartments"]    == { "e": "extracellular space", "c": "cytosol" }
+
+    path_nave2018   = osp.join(PATH["SBML"], "nave2018.xml")
+    model           = sbml2json(path_nave2018)
+
+    assert model["id"]              == "New_Model"

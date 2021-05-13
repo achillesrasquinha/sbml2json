@@ -6,12 +6,21 @@ import gzip
 import libsbml
 
 from sbml2json.util.system import check_gzip, make_temp_dir, write
+from sbml2json.util._dict  import merge_dict
 
 def _get_model(reader, f):
     document    = reader.readSBML(f)
     model       = document.getModel()
 
-    return model 
+    return model
+
+def _get_stoichiometry(species, reversible):
+    direction = -1 if reversible else 1
+
+    return dict(
+        ( m_species.getSpecies(), m_species.getStoichiometry() * direction )
+            for m_species in species
+    )
 
 def sbml2json(f):
     dict_   = { }
@@ -44,14 +53,31 @@ def sbml2json(f):
 
     dict_["compartments"] = compartments
 
-    species         = [ ]
+    species = [ ]
 
     for m_species in model.getListOfSpecies():
         species.append({
-            "id":   m_species.getId(),
-            "name": m_species.getName()
+            "id":           m_species.getId(),
+            "name":         m_species.getName(),
+            "compartment":  m_species.getCompartment()
+        })
+        
+    dict_["species"] = species
+
+    reactions = [ ]
+
+    for m_reaction in model.getListOfReactions():
+        reversible = m_reaction.getReversible()
+        
+        reactions.append({
+            "id":           m_reaction.getId(),
+            "name":         m_reaction.getName(),
+            "stoichiometry":    merge_dict(
+                _get_stoichiometry(m_reaction.getListOfReactants(), reversible),
+                _get_stoichiometry(m_reaction.getListOfProducts(), reversible)
+            )
         })
 
-    print(species)
+    dict_["reactions"]  = reactions
 
     return dict_
