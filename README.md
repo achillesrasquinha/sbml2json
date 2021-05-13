@@ -1,5 +1,5 @@
 <div align="center">
-  <img src=".github/assets/logo.jpg" height="128">
+  <img src=".github/assets/logo.png" height="128">
   <h1>
       sbml2json
   </h1>
