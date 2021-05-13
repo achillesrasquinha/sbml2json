@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from __future__ import absolute_import
 
 import os.path as osp
@@ -55,3 +56,7 @@ def sbml2json(f):
     print(species)
 
     return dict_
+=======
+
+from __future__ import absolute_import
+>>>>>>> template/master
