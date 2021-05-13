@@ -5,10 +5,7 @@ from   distutils.spawn import find_executable
 
 # imports - test imports
 import pytest
-<<<<<<< HEAD
-=======
 from testutils import PATH
->>>>>>> template/master
 
 # imports - module imports
 from sbml2json.util.system import (read, write, popen, which, makedirs,
