@@ -24,6 +24,7 @@ from sbml2json.__attr__ import (
 from sbml2json.__main__    import main
 from sbml2json.config      import Settings
 from sbml2json.util.jobs   import run_all as run_all_jobs, run_job
+from sbml2json.sbml2json   import sbml2json
 
 settings = Settings()
 

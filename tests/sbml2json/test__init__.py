@@ -5,3 +5,5 @@ def test_imports():
         __author__  as _,
         main        as _
     )
+    
+    from sbml2json import sbml2json
