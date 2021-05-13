@@ -1,8 +1,9 @@
 <div align="center">
-    <h1>
-        sbml2json
-    </h1>
-    <h4>An SBML to JSON converter</h4>
+  <img src=".github/assets/logo.jpg" height="128">
+  <h1>
+      sbml2json
+  </h1>
+  <h4>An SBML to JSON converter</h4>
 </div>
 
 <p align="center">
