@@ -9,7 +9,7 @@ from testutils import PATH
 
 # imports - module imports
 from sbml2json.util.system import (read, write, popen, which, makedirs,
-    touch)
+    touch, check_gzip)
 
 def test_read(tmpdir):
     directory = tmpdir.mkdir("tmp")
