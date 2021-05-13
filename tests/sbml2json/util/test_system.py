@@ -110,3 +110,13 @@ def test_touch(tmpdir):
 
     touch(path)
     assert osp.exists(path)
+
+def test_check_gzip():
+    path_gzip = osp.join(PATH["DATA"], "sample.txt.gz")
+    path_txt  = osp.join(PATH["DATA"], "sample.txt")
+
+    assert check_gzip(path_gzip)
+    assert not check_gzip(path_txt, raise_err = False)
+    
+    with pytest.raises(ValueError):
+        check_gzip(path_txt)
