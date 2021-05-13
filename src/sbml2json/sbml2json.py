@@ -1,12 +1,23 @@
 from __future__ import absolute_import
 
 import os.path as osp
+import re
 import gzip
 
 import libsbml
 
-from sbml2json.util.system import check_gzip, make_temp_dir, write
-from sbml2json.util._dict  import merge_dict
+from sbml2json.util.string  import strip
+from sbml2json.util.system  import check_gzip, make_temp_dir, write
+from sbml2json.util._dict   import merge_dict
+from sbml2json.log          import get_logger
+
+logger      = get_logger()
+
+# https://git.io/Jsm7p
+REGEX_NOTES = re.compile(
+    r"<(?P<prefix>(\w+:)?)p[^>]*>(?P<content>.*?)</(?P=prefix)p>",
+    re.IGNORECASE | re.DOTALL,
+)
 
 def _get_model(reader, f):
     document    = reader.readSBML(f)
@@ -21,6 +32,37 @@ def _get_stoichiometry(species, reversible):
         ( m_species.getSpecies(), m_species.getStoichiometry() * direction )
             for m_species in species
     )
+
+# from cobra.io.sbml import _parse_notes_dict as _parse_notes, _parse_annotations
+
+# # https://git.io/Jsm5L
+# def _parse_notes(sbase):
+#     notes = sbase.getNotesString()
+#     dict_ = { }
+
+#     if notes and len(notes) > 0:
+#         dict_ = { }
+
+#         for match in REGEX_NOTES.finditer(notes):
+#             content = match.group("content")
+
+#             try:
+#                 key, value = list(map(strip, content.split(":", 1)))
+#             except ValueError:
+#                 logger.error('Unexpected content format: %s' % content)
+#                 continue
+
+#             if value:
+#                 dict_[key] = value
+
+#     return dict_
+
+# def _parse_annotations(sbase):
+#     annotations = { }
+
+#     # TODO: Implement
+
+#     return annotations
 
 def sbml2json(f):
     dict_   = { }
@@ -43,7 +85,20 @@ def sbml2json(f):
     if not model:
         raise ValueError("Unable to read SBML Model from file: %s" % f)
 
-    dict_["id"]     = model.getId()
+    model_id        = model.getIdAttribute()
+
+    metadata        = { }
+
+    metadata["level"]   = model.getLevel()
+    metadata["version"] = model.getVersion()
+
+    # TODO: Check parsing
+    # metadata["notes"]   = _parse_notes(model)
+
+    # annotations             = _parse_annotations(model)
+    # dict_["annotations"]    = annotations
+
+    dict_["id"]     = model_id
     dict_["name"]   = model.getName()
 
     compartments    = { }
@@ -79,5 +134,7 @@ def sbml2json(f):
         })
 
     dict_["reactions"]  = reactions
+
+    dict_["_meta"]      = metadata
 
     return dict_
