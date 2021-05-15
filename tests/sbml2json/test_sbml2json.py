@@ -20,3 +20,8 @@ def test_sbml2json():
     model           = sbml2json(path_nave2018)
 
     assert model["id"]              == "New_Model"
+
+def test_sbml2json_url():
+    model = sbml2json("http://bigg.ucsd.edu/static/models/iAB_RBC_283.xml.gz")
+
+    # assert model[]

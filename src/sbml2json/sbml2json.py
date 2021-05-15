@@ -9,7 +9,9 @@ import libsbml
 from sbml2json.util.string  import strip
 from sbml2json.util.system  import check_gzip, make_temp_dir, write
 from sbml2json.util._dict   import merge_dict
+from sbml2json.util.request import check_url
 from sbml2json.log          import get_logger
+from sbml2json              import request as req
 
 logger      = get_logger()
 
@@ -70,17 +72,30 @@ def sbml2json(f):
     
     reader  = libsbml.SBMLReader()
 
-    if check_gzip(f, raise_err = False):
-        with gzip.open(f, "rb") as extracted_file:
-            content = extracted_file.read()
+    with make_temp_dir() as tmp_dir:
+        if check_url(f, raise_err = False):
+            response = req.get(f, stream = True)
 
-            with make_temp_dir() as tmp_dir:
+            if response.ok:
+                output_file = osp.join(tmp_dir, "downloaded")
+
+                for content in response.iter_content(chunk_size = 1024):
+                    write(output_file, content, append = True)
+
+                f = output_file
+            else:
+                response.raise_for_status()
+
+        if check_gzip(f, raise_err = False):
+            with gzip.open(f, "rb") as extracted_file:
+                content = extracted_file.read()
+
                 output_file = osp.join(tmp_dir, "output.xml")
                 write(output_file, content, mode = "wb")
 
                 model = _get_model(reader, output_file)
-    else:
-        model = _get_model(reader, f)
+        else:
+            model = _get_model(reader, f)
 
     if not model:
         raise ValueError("Unable to read SBML Model from file: %s" % f)
