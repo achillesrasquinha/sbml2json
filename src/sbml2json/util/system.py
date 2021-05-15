@@ -68,9 +68,9 @@ def popen(*args, **kwargs):
         environ.update(environment)
 
     for k, v in iteritems(environ):
-        environ[k] = str(v)
+        environ[k] = string_types(v)
 
-    command     = " ".join([str(arg) for arg in args])
+    command     = " ".join([string_types(arg) for arg in args])
     logger.info("Executing command: %s" % command)
 
     if quiet:
@@ -120,6 +120,24 @@ def touch(filename):
     if not osp.exists(filename):
         with open(filename, "w") as f:
             pass
+
+def remove(path, recursive = False, raise_err = True):
+    path = osp.realpath(path)
+
+    if osp.isdir(path):
+        if recursive:
+            shutil.rmtree(path)
+        else:
+            if raise_err:
+                raise OSError("{path} is a directory.".format(
+                    path = path
+                ))
+    else:
+        try:
+            os.remove(path)
+        except OSError:
+            if raise_err:
+                raise
 
 @contextlib.contextmanager
 def make_temp_dir():

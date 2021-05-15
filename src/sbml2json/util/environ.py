@@ -38,7 +38,7 @@ def value_to_envval(value):
 		elif value == False:
 			value = "false"
 		elif isinstance(value, int):
-			value = str(value)
+			value = string_types(value)
 		else:
 			raise TypeError("Unknown parameter type %s with value %r" % (value, type(value)))
 

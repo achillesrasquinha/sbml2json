@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 
 # imports - compatibility imports
-from sbml2json._compat     import zip_longest
+from sbml2json._compat     import zip_longest, string_types
 
 # imports - module imports
 from sbml2json.util.string import strip_ansi
@@ -20,11 +20,11 @@ def tabulate(rows):
 
     sizes  = [0] * max(len(x) for x in rows)
     for row in rows:
-        sizes = [max(s, len(str(_sanitize_string(c if c else "")))) for s, c in zip_longest(sizes, row)]
+        sizes = [max(s, len(string_types(_sanitize_string(c if c else "")))) for s, c in zip_longest(sizes, row)]
 
     result = [ ]
     for row in rows:
-        display = " ".join([str(c) + " " * (s - len(_sanitize_string(c if c else ""))) if c is not None else ""
+        display = " ".join([string_types(c) + " " * (s - len(_sanitize_string(c if c else ""))) if c is not None else ""
                             for s, c in zip_longest(sizes, row)])
         result.append(display)
 
