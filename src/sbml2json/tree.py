@@ -1,8 +1,5 @@
 from __future__ import absolute_import
 
-# imports - compatibility imports
-from sbml2json._compat import string_types
-
 def _render_tree(node, depth = 0, indent = 2, formatter = None):
     spacing     = (indent * " ") * depth
     formatted   = formatter(node.obj) if formatter else node.obj
@@ -101,7 +98,7 @@ class Node(object):
             self.add_child(child)
 
     def __repr__(self):
-        repr_ = "<Node '%s'%s>" % (string_types(self.obj), 
+        repr_ = "<Node '%s'%s>" % (str(self.obj), 
             "parent='%s'" % self.parent if self.parent else "")
         return repr_
 
@@ -125,7 +122,7 @@ class Node(object):
         return dict_
 
     def to_json(self):
-        repr_ = lambda x: string_types(x.obj if isinstance(x, Node) else x)
+        repr_ = lambda x: str(x.obj if isinstance(x, Node) else x)
         return self.to_dict(repr_ = repr_)
 
     def find(self, query):
