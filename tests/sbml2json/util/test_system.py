@@ -49,6 +49,11 @@ def test_write(tmpdir):
 @pytest.mark.skipif(os.name == "nt", reason = "requires a UNIX-based OS to run on.")
 def test_popen(tmpdir):
     directory = tmpdir.mkdir("tmp")
+    dirpath   = str(directory)
+
+    string    = "Hello, World!"
+
+    code, out, err = popen("echo %s" % string,
         output = True)
     assert code == 0
     assert out  == string
@@ -101,7 +106,11 @@ def test_makedirs(tmpdir):
 def test_touch(tmpdir):
     directory = tmpdir.mkdir("tmp")
 <<<<<<< HEAD
+<<<<<<< HEAD
     path      = osp.join(string_types(directory), "foo")
+=======
+    path      = osp.join(str(directory), "foo")
+>>>>>>> template/master
 =======
     path      = osp.join(str(directory), "foo")
 >>>>>>> template/master
