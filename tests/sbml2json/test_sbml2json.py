@@ -23,5 +23,3 @@ def test_sbml2json():
 
 def test_sbml2json_url():
     model = sbml2json("http://bigg.ucsd.edu/static/models/iAB_RBC_283.xml.gz")
-
-    # assert model[]
