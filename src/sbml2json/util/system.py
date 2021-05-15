@@ -15,7 +15,7 @@ from   distutils.spawn import find_executable
 from sbml2json.exception       import PopenError
 from sbml2json.util.string     import strip, safe_decode
 from sbml2json.util.environ    import SECRETS
-from sbml2json._compat         import iteritems, PY2
+from sbml2json._compat         import string_types, iteritems, PY2
 from sbml2json.log             import get_logger
 
 logger = get_logger()

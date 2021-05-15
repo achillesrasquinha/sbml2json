@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 # imports - compatibility imports
 from sbml2json._compat import string_types
 
