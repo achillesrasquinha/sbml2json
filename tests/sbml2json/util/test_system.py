@@ -105,15 +105,7 @@ def test_makedirs(tmpdir):
 
 def test_touch(tmpdir):
     directory = tmpdir.mkdir("tmp")
-<<<<<<< HEAD
-<<<<<<< HEAD
-    path      = osp.join(string_types(directory), "foo")
-=======
     path      = osp.join(str(directory), "foo")
->>>>>>> template/master
-=======
-    path      = osp.join(str(directory), "foo")
->>>>>>> template/master
 
     assert not osp.exists(path)
 
