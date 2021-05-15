@@ -11,12 +11,12 @@ import traceback
 
 from sbml2json.commands.util 	import cli_format
 from sbml2json.util.array    	import flatten, sequencify
-from sbml2json.util._dict     import merge_dict
+from sbml2json.util._dict       import merge_dict
 from sbml2json.util.system   	import (read, write, touch, popen, which)
 from sbml2json.util.environ  	import getenvvar
 from sbml2json.util.datetime 	import get_timestamp_str
-from sbml2json.util.imports   import import_handler
-from sbml2json 		      	import (request as req, cli,
+from sbml2json.util.imports     import import_or_raise
+from sbml2json 		      	    import (request as req, cli,
     log, parallel
 )
 from sbml2json._compat		import builtins, iteritems
@@ -68,18 +68,6 @@ def to_params(kwargs):
         setattr(params, k, v)
 
     return params
-
-def import_or_raise(package, name = None):
-    name = name or package
-
-    try:
-        import_handler(package)
-    except ImportError:
-        raise DependencyNotFoundError((
-            "Unable to import {package} for resolving dependencies. "
-            "sbml2json requires {package} to be installed. "
-            "Please install {package} by executing 'pip install {name}'."
-        ).format(package = package, name = name))
 
 def _command(*args, **kwargs):
     a = to_params(kwargs)
