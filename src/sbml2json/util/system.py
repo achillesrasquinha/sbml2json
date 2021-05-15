@@ -15,7 +15,7 @@ from   distutils.spawn import find_executable
 from sbml2json.exception       import PopenError
 from sbml2json.util.string     import strip, safe_decode
 from sbml2json.util.environ    import SECRETS
-from sbml2json._compat         import string_types, iteritems, PY2
+from sbml2json._compat         import iteritems, PY2
 from sbml2json.log             import get_logger
 
 logger = get_logger()
@@ -68,9 +68,9 @@ def popen(*args, **kwargs):
         environ.update(environment)
 
     for k, v in iteritems(environ):
-        environ[k] = string_types(v)
+        environ[k] = str(v)
 
-    command     = " ".join([string_types(arg) for arg in args])
+    command     = " ".join([str(arg) for arg in args])
     logger.info("Executing command: %s" % command)
 
     if quiet:

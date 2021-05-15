@@ -2,15 +2,14 @@
 import pytest
 
 # imports - module imports
-from sbml2json.tree    import Node
-from sbml2json._compat import string_types
+from sbml2json.tree import Node
 
 def test_node():
     tree1 = Node("foo")
     assert tree1.empty == True
     assert tree1 == Node("foo")
 
-    assert string_types(tree1) == "<Node 'foo'>"
+    assert str(tree1) == "<Node 'foo'>"
 
     assert tree1.render() == \
 """\

@@ -10,8 +10,6 @@ from sbml2json.exception   import (
     PopenError
 )
 
-from sbml2json._compat import string_types
-
 # imports - test imports
 import pytest
 
@@ -21,7 +19,7 @@ def test_sbml2json_error():
 
 def test_popen_error():
     with pytest.raises(PopenError):
-        popen('python -c "raise TypeError"')
+        popen('python -c "from sbml2json.exceptions import PopenError; raise PopenError"')
 
     assert isinstance(
         PopenError(0, "echo foobar"),
