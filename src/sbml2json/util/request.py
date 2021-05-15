@@ -30,7 +30,8 @@ def proxy_request(*args, **kwargs):
     session.proxies.update(proxies)
 
     try:
-        response = session.request(*args, **kwargs, timeout = 5)
+        kwargs["timeout"] = 5
+        response = session.request(*args, **kwargs)
     except requests.exceptions.ConnectionError as e:
         if fallback:
             session.headers = kwargs.get("headers", {})
