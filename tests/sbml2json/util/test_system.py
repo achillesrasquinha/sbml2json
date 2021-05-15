@@ -10,6 +10,7 @@ from testutils import PATH
 # imports - module imports
 from sbml2json.util.system import (read, write, popen, which, makedirs,
     touch, check_gzip)
+from sbml2json._compat import string_types
 
 def test_read(tmpdir):
     directory = tmpdir.mkdir("tmp")

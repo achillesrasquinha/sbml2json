@@ -10,6 +10,8 @@ from sbml2json.exception   import (
     PopenError
 )
 
+from sbml2json._compat import string_types
+
 # imports - test imports
 import pytest
 

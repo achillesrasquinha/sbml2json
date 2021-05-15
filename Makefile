@@ -223,7 +223,6 @@ endif
 start: ## Start app.
 	$(PYTHON) -m flask run
 
-
 notebooks: ## Launch Notebooks
 	$(JUPYTER) notebook --notebook-dir $(NOTEBOOKSDIR) $(ARGS)
 
