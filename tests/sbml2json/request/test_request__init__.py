@@ -5,12 +5,7 @@ from sbml2json._compat import HTTPError
 import pytest
 
 # imports - standard imports
-<<<<<<< HEAD
-from sbml2json         import request as req
-from sbml2json._compat import string_types
-=======
 from sbml2json import request as req
->>>>>>> template/master
 
 def test_get():
     res  = req.get("https://httpbin.org/get")
@@ -29,11 +24,7 @@ def test_get():
     with pytest.raises(HTTPError):
         res.raise_for_status()
 
-<<<<<<< HEAD
-    assert string_types(res) == "<Response [{code}]>".format(
-=======
     assert str(res) == "<Response [{code}]>".format(
->>>>>>> template/master
         code = 404
     )
 

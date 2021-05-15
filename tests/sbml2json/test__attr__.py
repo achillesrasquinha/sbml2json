@@ -14,10 +14,6 @@ from sbml2json.__attr__ import (
     sequence_filter,
     get_revision
 )
-<<<<<<< HEAD
-from sbml2json._compat  import string_types
-=======
->>>>>>> template/master
 
 def call(*args, **kwargs):
     subprocess.call(args, **kwargs)
@@ -27,11 +23,7 @@ def test_read(tmpdir):
     tempfile  = directory.join("foobar.txt")
     tempfile.write("foobar")
 
-<<<<<<< HEAD
-    assert tempfile.read() == read(string_types(tempfile))
-=======
     assert tempfile.read() == read(str(tempfile))
->>>>>>> template/master
 
     tempfile  = directory.join("barfoo.txt")
     tempfile.write(\
@@ -42,11 +34,7 @@ def test_read(tmpdir):
         """
     )
 
-<<<<<<< HEAD
-    assert tempfile.read() == read(string_types(tempfile))
-=======
     assert tempfile.read() == read(str(tempfile))
->>>>>>> template/master
 
 def test_pardir():
     assert pardir(__file__)    == osp.dirname(__file__)
