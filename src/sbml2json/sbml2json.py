@@ -80,7 +80,7 @@ def sbml2json(f):
                 output_file = osp.join(tmp_dir, "downloaded")
 
                 for content in response.iter_content(chunk_size = 1024):
-                    write(output_file, content, append = True)
+                    write(output_file, content, append = True, mode = "wb")
 
                 f = output_file
             else:

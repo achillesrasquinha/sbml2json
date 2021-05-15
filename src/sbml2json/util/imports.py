@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-=======
-from sbml2json.exceptions import DependencyNotFoundError
+from sbml2json.exception import DependencyNotFoundError
 
->>>>>>> template/master
 class HandlerRegistry(dict):
     def __missing__(self, name):
         if '.' not in name:
@@ -21,9 +18,6 @@ _HANDLER_REGISTRY = HandlerRegistry()
 
 def import_handler(name):
     handler = _HANDLER_REGISTRY[name]
-<<<<<<< HEAD
-    return handler
-=======
     return handler
 
 def import_or_raise(package, name = None):
@@ -37,4 +31,3 @@ def import_or_raise(package, name = None):
             "sbml2json requires {package} to be installed. "
             "Please install {package} by executing 'pip install {name}'."
         ).format(package = package, name = name))
->>>>>>> template/master

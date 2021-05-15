@@ -1,14 +1,6 @@
 import re
 
 import requests
-<<<<<<< HEAD
-import grequests
-# from fake_useragent import UserAgent
-
-from sbml2json.db import get_connection
-from sbml2json.util.proxy import get_random_requests_proxies
-from sbml2json.util._dict import merge_dict
-=======
 
 # from fake_useragent import UserAgent
 
@@ -16,7 +8,6 @@ from sbml2json.db import get_connection
 from sbml2json.util.proxy     import get_random_requests_proxies
 from sbml2json.util._dict     import merge_dict
 from sbml2json.util.imports   import import_or_raise
->>>>>>> template/master
 
 # user_agent = UserAgent(verify_ssl = False)
 
@@ -34,11 +25,7 @@ def proxy_request(*args, **kwargs):
 
     session  = requests.Session()
 
-<<<<<<< HEAD
-    proxies = get_random_requests_proxies()
-=======
     proxies  = get_random_requests_proxies()
->>>>>>> template/master
     # session.headers.update({ "User-Agent": user_agent.random })
     session.proxies.update(proxies)
 
@@ -60,10 +47,7 @@ def proxy_grequest(*args, **kwargs):
     # kwargs["headers"] = merge_dict(kwargs.get("headers", {}), {
     #     "User-Agent": user_agent.random })
     kwargs["proxies"] = merge_dict(kwargs.get("proxies", {}), proxies)
-<<<<<<< HEAD
-=======
     grequests         = import_or_raise("grequests")
->>>>>>> template/master
 
     return grequests.request(*args, **kwargs)
 
