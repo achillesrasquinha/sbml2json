@@ -27,9 +27,8 @@ def _get_model(reader, f):
 
     return model
 
-def _get_stoichiometry(species, reversible):
-    direction = -1 if reversible else 1
-
+def _get_stoichiometry(species, type_):
+    direction = -1 if type_ == "r" else 1
     return dict(
         ( m_species.getSpecies(), m_species.getStoichiometry() * direction )
             for m_species in species
@@ -139,14 +138,12 @@ def sbml2json(f):
     reactions = [ ]
 
     for m_reaction in model.getListOfReactions():
-        reversible = m_reaction.getReversible()
-        
         reactions.append({
             "id":           m_reaction.getId(),
             "name":         m_reaction.getName(),
-            "stoichiometry":    merge_dict(
-                _get_stoichiometry(m_reaction.getListOfReactants(), reversible),
-                _get_stoichiometry(m_reaction.getListOfProducts(), reversible)
+            "stoichiometry": merge_dict(
+                _get_stoichiometry(m_reaction.getListOfReactants(), "r"),
+                _get_stoichiometry(m_reaction.getListOfProducts(),  "p")
             )
         })
 
