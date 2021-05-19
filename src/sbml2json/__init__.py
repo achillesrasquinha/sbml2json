@@ -24,17 +24,10 @@ from sbml2json.__attr__ import (
 from sbml2json.__main__    import main
 from sbml2json.config      import Settings
 from sbml2json.util.jobs   import run_all as run_all_jobs, run_job
-<<<<<<< HEAD
 from sbml2json.sbml2json   import sbml2json
 
 settings = Settings()
 
-=======
-
-settings = Settings()
-
-
->>>>>>> template/master
 def get_version_str():
     version = "%s%s" % (__version__, " (%s)" % __build__ if __build__ else "")
     return version
