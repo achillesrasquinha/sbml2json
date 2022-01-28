@@ -34,36 +34,36 @@ def _get_stoichiometry(species, type_):
             for m_species in species
     )
 
-# from cobra.io.sbml import _parse_notes_dict as _parse_notes, _parse_annotations
+from cobra.io.sbml import _parse_notes_dict as _parse_notes, _parse_annotations
 
 # # https://git.io/Jsm5L
-# def _parse_notes(sbase):
-#     notes = sbase.getNotesString()
-#     dict_ = { }
+def _parse_notes(sbase):
+    notes = sbase.getNotesString()
+    dict_ = { }
 
-#     if notes and len(notes) > 0:
-#         dict_ = { }
+    if notes and len(notes) > 0:
+        dict_ = { }
 
-#         for match in REGEX_NOTES.finditer(notes):
-#             content = match.group("content")
+        for match in REGEX_NOTES.finditer(notes):
+            content = match.group("content")
 
-#             try:
-#                 key, value = list(map(strip, content.split(":", 1)))
-#             except ValueError:
-#                 logger.error('Unexpected content format: %s' % content)
-#                 continue
+            try:
+                key, value = list(map(strip, content.split(":", 1)))
+            except ValueError:
+                logger.error('Unexpected content format: %s' % content)
+                continue
 
-#             if value:
-#                 dict_[key] = value
+            if value:
+                dict_[key] = value
 
-#     return dict_
+    return dict_
 
-# def _parse_annotations(sbase):
-#     annotations = { }
+def _parse_annotations(sbase):
+    annotations = { }
 
-#     # TODO: Implement
+    # TODO: Implement
 
-#     return annotations
+    return annotations
 
 def sbml2json(f):
     dict_   = { }
@@ -101,9 +101,9 @@ def sbml2json(f):
     if not model:
         raise ValueError("Unable to read SBML Model from file: %s" % f)
 
-    model_id        = model.getIdAttribute()
+    model_id = model.getIdAttribute()
 
-    metadata        = { }
+    metadata = { }
 
     metadata["level"]   = model.getLevel()
     metadata["version"] = model.getVersion()
@@ -111,8 +111,8 @@ def sbml2json(f):
     # TODO: Check parsing
     # metadata["notes"]   = _parse_notes(model)
 
-    # annotations             = _parse_annotations(model)
-    # dict_["annotations"]    = annotations
+    annotations             = _parse_annotations(model)
+    dict_["annotations"]    = annotations
 
     dict_["id"]     = model_id
     dict_["name"]   = model.getName()
